@@ -1,4 +1,5 @@
 def get_board():
     return [[ '.','.','.' ],[ '.','.','.' ],[ 'H','.','.' ]]
-
-print(get_board()[2][0])
+                  #A              #B              #C
+#print(get_board()[2][0])
+                  #C#1 
