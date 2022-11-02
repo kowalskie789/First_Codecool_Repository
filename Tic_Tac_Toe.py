@@ -1,8 +1,3 @@
-from msilib.schema import tables
-from operator import truediv
-import re
-
-
 def get_board():
     return [[ '.','.','.' ],[ '.','.','.' ],[ '.','.','.' ]]
                   #A              #B              #C
