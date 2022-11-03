@@ -57,11 +57,11 @@ def onevone():
     X=True
     while True:
         print_board()
-        if is_board_full(): 
-            print("Tablica pełna koniec gry")
-            break
         if get_winning_player() != False:
             print("wygrał ",get_winning_player()[1])
+            break
+        if is_board_full(): 
+            print("Tablica pełna koniec gry")
             break
         while X:
             holder = get_human_coordinates()
@@ -103,7 +103,6 @@ def get_winning_player():
     
 def is_board_full():
     if not any("." in x for x in tablica): #nie wiem jak to działa 
-        print("tablica pełna koniec gry")
         return True
     return False
 
@@ -113,10 +112,37 @@ def random_comp():
         for col in range(0, 3):
             if tablica[row][col] == ".":
                 x.append(str(row)+","+str(col))
-    print(x[random.randrange(0,len(x))])        
+                print(x)
+    print(x[random.randrange(0,len(x))])
+    return x[random.randrange(0,len(x))]   
 
-    return
+def comp_lvl_begginer():
+    X=True
+    while True:
+        print_board()
 
+        if get_winning_player() != False:
+            print("wygrał ",get_winning_player()[1])
+            break
+        if is_board_full(): 
+            print("Tablica pełna koniec gry")
+            break
+        while X:
+            holder = get_human_coordinates()
+            if tablica[holder[0]][holder[1]] not in "X,O".split(","):
+                implement_move(holder,"X")
+                X= False
+                break
+            else:
+                print("Wrong move, try again")
+                print_board()
+                
+        else:
+            holder = ([int(x) for x in random_comp().split(",")])
+            implement_move(holder,"O")
+            X= True
+            
+                
 
 
 def main_menu():
@@ -129,7 +155,7 @@ def main_menu():
         onevone()
         
     if x == "2":
-        random_comp()
+        comp_lvl_begginer()
         return
     if x == "3":
          # tu będzie minmax jak się uda jak nie to skasować :P
