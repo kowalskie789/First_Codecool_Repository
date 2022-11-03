@@ -1,10 +1,12 @@
+import random
+
 def get_board():
     return [[ '.','.','.' ],[ '.','.','.' ],[ '.','.','.' ]]
                   #A              #B              #C
 #print(get_board()[2][0])
                   #C#1 
+#tablica = get_board()
 
-tablica = get_board() #ważne!!! 
 
 def print_board():
     print("   1   2   3")
@@ -55,8 +57,12 @@ def onevone():
     X=True
     while True:
         print_board()
-        if is_board_full() or get_winning_player(): 
-            quit() # zamienić na main menu później? 
+        if is_board_full(): 
+            print("Tablica pełna koniec gry")
+            break
+        if get_winning_player() != False:
+            print("wygrał ",get_winning_player()[1])
+            break
         while X:
             holder = get_human_coordinates()
             if tablica[holder[0]][holder[1]] not in "X,O".split(","):
@@ -81,18 +87,19 @@ def get_winning_player():
     # Checking for rows for win
     for row in range(0, 3):
         if tablica[row][0] == tablica[row][1] == tablica[row][2] and tablica[row][0] != '.':
-            return print("Wygrał ", tablica[row][0])
+            return True, tablica[row][0]
     
     # Checking for columns for win
     for col in range(0, 3):
         if tablica[0][col] == tablica[1][col] == tablica[2][col] and tablica[0][col] != '.':
-            return print("Wygrał ", tablica[0][col])
+            return True, tablica[0][col]
         
     # Checks for diagonals for win
     if tablica[0][0]==tablica[1][1]==tablica[2][2] and tablica[0][0]!='.':
-        return print("Wygrał ",tablica[0][0])
+        return True,tablica[0][0]
     if tablica[0][2]==tablica[1][1]==tablica[2][0] and tablica[0][2]!='.':
-        return print("Wygrał ",tablica[0][2])
+        return True,tablica[0][2]
+    return False
     
 def is_board_full():
     if not any("." in x for x in tablica): #nie wiem jak to działa 
@@ -100,6 +107,38 @@ def is_board_full():
         return True
     return False
 
+def random_comp():
+    x = []
+    for row in range(0, 3):
+        for col in range(0, 3):
+            if tablica[row][col] == ".":
+                x.append(str(row)+","+str(col))
+    print(x[random.randrange(0,len(x))])        
+
+    return
 
 
-onevone()
+
+def main_menu():
+    print("1) Zagraj z człowiekiem")
+    print("2) Zagraj z komputerem (lvl. begginer)")
+    print("3) Zagraj z komputerem (lvl. hard)")
+    print("4) Wyjdź z gry")
+    x= input("Podaj cyfrę od 1 do 4 ")
+    if x == "1":
+        onevone()
+        
+    if x == "2":
+        random_comp()
+        return
+    if x == "3":
+         # tu będzie minmax jak się uda jak nie to skasować :P
+        return
+    if x == "4":
+        quit()
+    
+while True:
+    tablica = get_board()
+    main_menu()
+    
+
